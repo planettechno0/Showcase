@@ -80,6 +80,12 @@
             box-shadow: var(--shadow-lg);
         }
 
+        .card:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 4px;
+            transform: translateY(-5px);
+        }
+
         .card-image-wrapper {
             width: 100%;
             height: 220px;
@@ -282,9 +288,9 @@
     </main>
 
     <!-- Modal Structure -->
-    <div id="product-modal" class="modal-overlay">
+    <div id="product-modal" class="modal-overlay" role="dialog" aria-modal="true">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <button class="close-btn" onclick="closeModal()" aria-label="بستن">&times;</button>
             <div class="modal-image-wrapper">
                 <img id="modal-img" src="" alt="Product Image" class="modal-image">
             </div>
@@ -464,6 +470,7 @@
         const modalImg = document.getElementById('modal-img');
         const modalTitle = document.getElementById('modal-title');
         const modalDesc = document.getElementById('modal-desc');
+        let lastFocusedElement;
 
         // Render Products
         function render() {
@@ -473,6 +480,14 @@
                 const card = document.createElement('article');
                 card.className = 'card';
                 card.onclick = () => openModal(product);
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+                card.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openModal(product);
+                    }
+                };
                 
                 // Fallback to local image if CDN fails
                 const fallbackImage = `img/${product.filename}`;
@@ -496,6 +511,8 @@
 
         // Modal Functions
         function openModal(product) {
+            lastFocusedElement = document.activeElement;
+
             // Setup fallback for modal image as well
             const fallbackImage = `img/${product.filename}`;
             modalImg.onerror = function() {
@@ -510,6 +527,12 @@
             
             modalElement.classList.add('active');
             document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+            // Set focus to the close button after a small delay to ensure visibility
+            setTimeout(() => {
+                const closeBtn = modalElement.querySelector('.close-btn');
+                if (closeBtn) closeBtn.focus();
+            }, 50);
         }
 
         function closeModal() {
@@ -520,6 +543,10 @@
             setTimeout(() => {
                 modalImg.src = '';
             }, 300);
+
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
         }
 
         // Close modal when clicking outside content (on overlay)
