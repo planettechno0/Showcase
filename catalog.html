@@ -299,140 +299,162 @@
     <script>
         /**
          * Product Data
-         * Images are loaded from the GitHub repository using raw links.
+         * Images are loaded from jsdelivr (CDN) for better performance and reliability.
          */
         const products = [
     {
         "name": "آجیل مخلوط",
         "description": "مخلوطی از بهترین مغزها",
         "fullDescription": "آجیل مخلوط با کیفیت عالی، شامل پسته، بادام، فندق و تخمه. مناسب برای پذیرایی و میان‌وعده.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%A2%D8%AC%DB%8C%D9%84%20%D9%85%D8%AE%D9%84%D9%88%D8%B7.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%A2%D8%AC%DB%8C%D9%84%20%D9%85%D8%AE%D9%84%D9%88%D8%B7.jpeg",
+        "filename": "آجیل مخلوط.jpeg"
     },
     {
         "name": "ارده وزیری",
         "description": "ارده کنجد خالص و مقوی",
         "fullDescription": "ارده وزیری تهیه شده از کنجد مرغوب، انرژی‌زا و مناسب برای صبحانه.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%A7%D8%B1%D8%AF%D9%87%20%D9%88%D8%B2%DB%8C%D8%B1%DB%8C.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%A7%D8%B1%D8%AF%D9%87%20%D9%88%D8%B2%DB%8C%D8%B1%DB%8C.jpeg",
+        "filename": "ارده وزیری.jpeg"
     },
     {
         "name": "بادام زمینی",
         "description": "بادام زمینی تازه و خوشمزه",
         "fullDescription": "بادام زمینی با کیفیت، منبع غنی پروتئین و انرژی.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%A8%D8%A7%D8%AF%D9%85%20%D8%B2%D9%85%DB%8C%D9%86%DB%8C.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%A8%D8%A7%D8%AF%D9%85%20%D8%B2%D9%85%DB%8C%D9%86%DB%8C.jpeg",
+        "filename": "بادم زمینی.jpeg"
     },
     {
         "name": "تخم کدو نمکی",
         "description": "تخم کدو بوداده و نمکی",
         "fullDescription": "تخم کدو گوشتی و خوشمزه، سرشار از مواد معدنی.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%AA%D8%AE%D9%85%20%DA%A9%D8%AF%D9%88%20%D9%86%D9%85%DA%A9%DB%8C.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AA%D8%AE%D9%85%20%DA%A9%D8%AF%D9%88%20%D9%86%D9%85%DA%A9%DB%8C.jpeg",
+        "filename": "تخم کدو نمکی.jpeg"
     },
     {
         "name": "تخمه آفتابگردان",
         "description": "تخمه آفتابگردان درجه یک",
         "fullDescription": "تخمه آفتابگردان با طعم عالی، سرگرم‌کننده و خوشمزه.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%AA%D8%AE%D9%85%D9%87%20%D8%A2%D9%81%D8%AA%D8%A7%D8%A8%DA%AF%D8%B1%D8%AF%D8%A7%D9%86.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AA%D8%AE%D9%85%D9%87%20%D8%A2%D9%81%D8%AA%D8%A7%D8%A8%DA%AF%D8%B1%D8%AF%D8%A7%D9%86.jpeg",
+        "filename": "تخمه آفتابگردان.jpeg"
     },
     {
         "name": "جوهر نمک اطلس",
         "description": "پاک‌کننده قوی سطوح",
         "fullDescription": "جوهر نمک اطلس برای جرم‌گیری و نظافت سرویس‌های بهداشتی.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%AC%D9%88%D9%87%D8%B1%20%D9%86%D9%85%DA%A9%20%D8%A7%D8%B7%D9%84%D8%B3.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AC%D9%88%D9%87%D8%B1%20%D9%86%D9%85%DA%A9%20%D8%A7%D8%B7%D9%84%D8%B3.jpeg",
+        "filename": "جوهر نمک اطلس.jpeg"
     },
     {
         "name": "خرما آمارد",
         "description": "خرمای شیرین و مقوی",
         "fullDescription": "خرمای آمارد با طعم طبیعی و بافت نرم.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%AE%D8%B1%D9%85%D8%A7%20%D8%A2%D9%85%D8%A7%D8%B1%D8%AF.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AE%D8%B1%D9%85%D8%A7%20%D8%A2%D9%85%D8%A7%D8%B1%D8%AF.jpeg",
+        "filename": "خرما آمارد.jpeg"
     },
     {
         "name": "رطب آمارد",
         "description": "رطب تازه و مجلسی",
         "fullDescription": "رطب آمارد، شیرین و آبدار، مناسب برای سفره‌های شما.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%AE%D8%B1%D9%85%D8%A7%20%D8%B1%D8%B7%D8%A8%20%D8%A2%D9%85%D8%A7%D8%B1%D8%AF.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AE%D8%B1%D9%85%D8%A7%20%D8%B1%D8%B7%D8%A8%20%D8%A2%D9%85%D8%A7%D8%B1%D8%AF.jpeg",
+        "filename": "خرما رطب آمارد.jpeg"
     },
     {
         "name": "سرکه تقطیری",
         "description": "سرکه خالص و شفاف",
         "fullDescription": "سرکه تقطیری مناسب برای ترشی و چاشنی غذا.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%B3%D8%B1%DA%A9%D9%87%20%D8%AA%D9%82%D8%B7%DB%8C%D8%B1%DB%8C.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%B3%D8%B1%DA%A9%D9%87%20%D8%AA%D9%82%D8%B7%DB%8C%D8%B1%DB%8C.jpeg",
+        "filename": "سرکه تقطیری.jpeg"
     },
     {
         "name": "سرکه سفید اطمینان",
         "description": "سرکه سفید با کیفیت",
         "fullDescription": "سرکه سفید اطمینان، انتخابی مطمئن برای آشپزی.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%B3%D8%B1%DA%A9%D9%87%20%D8%B3%D9%81%DB%8C%D8%AF%20%D8%A7%D8%B7%D9%85%DB%8C%D9%86%D8%A7%D9%86.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%B3%D8%B1%DA%A9%D9%87%20%D8%B3%D9%81%DB%8C%D8%AF%20%D8%A7%D8%B7%D9%85%DB%8C%D9%86%D8%A7%D9%86.jpeg",
+        "filename": "سرکه سفید اطمینان.jpeg"
     },
     {
         "name": "عدس",
         "description": "عدس زودپز و خوش‌طعم",
         "fullDescription": "عدس درجه یک، منبع عالی پروتئین گیاهی.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%B9%D8%AF%D8%B3.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%B9%D8%AF%D8%B3.jpeg",
+        "filename": "عدس.jpeg"
     },
     {
         "name": "علی کافه",
         "description": "قهوه فوری خوش‌عطر",
         "fullDescription": "علی کافه با طعم غلیظ و انرژی‌بخش.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D8%B9%D9%84%DB%8C%20%DA%A9%D8%A7%D9%81%D9%87.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%B9%D9%84%DB%8C%20%DA%A9%D8%A7%D9%81%D9%87.jpeg",
+        "filename": "علی کافه.jpeg"
     },
     {
         "name": "قرص ظرفشویی فیری",
         "description": "تمیزکننده قوی ظروف",
         "fullDescription": "قرص ماشین ظرفشویی فیری، چربی‌زدای قوی و براق‌کننده.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D9%82%D8%B1%D8%B5%20%D8%B8%D8%B1%D9%81%D8%B4%D9%88%DB%8C%DB%8C%20%D9%81%DB%8C%D8%B1%DB%8C.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%82%D8%B1%D8%B5%20%D8%B8%D8%B1%D9%81%D8%B4%D9%88%DB%8C%DB%8C%20%D9%81%DB%8C%D8%B1%DB%8C.jpeg",
+        "filename": "قرص ظرفشویی فیری.jpeg"
     },
     {
         "name": "قرص ظرفشویی فینیش",
         "description": "شستشوی کامل ظروف",
         "fullDescription": "قرص ماشین ظرفشویی فینیش، محافظ ظروف و ماشین ظرفشویی.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D9%82%D8%B1%D8%B5%20%D8%B8%D8%B1%D9%81%D8%B4%D9%88%DB%8C%DB%8C%20%D9%81%DB%8C%D9%86%DB%8C%D8%B4.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%82%D8%B1%D8%B5%20%D8%B8%D8%B1%D9%81%D8%B4%D9%88%DB%8C%DB%8C%20%D9%81%DB%8C%D9%86%DB%8C%D8%B4.jpeg",
+        "filename": "قرص ظرفشویی فینیش.jpeg"
     },
     {
         "name": "لوبیا سفید",
         "description": "لوبیا سفید مجلسی",
         "fullDescription": "لوبیا سفید درشت و یکدست، مناسب برای خوراک و آش.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D9%84%D9%88%D8%A8%DB%8C%D8%A7%20%D8%B3%D9%81%DB%8C%D8%AF.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%84%D9%88%D8%A8%DB%8C%D8%A7%20%D8%B3%D9%81%DB%8C%D8%AF.jpeg",
+        "filename": "لوبیا سفید.jpeg"
     },
     {
         "name": "نبات زعفرانی",
         "description": "نبات با عطر زعفران",
         "fullDescription": "نبات زعفرانی اعلاء، شیرین‌کننده چای و دمنوش.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D9%86%D8%A8%D8%A7%D8%AA%20%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%86%D8%A8%D8%A7%D8%AA%20%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C.jpeg",
+        "filename": "نبات زعفرانی.jpeg"
     },
     {
         "name": "نبات سفید",
         "description": "نبات سفید سنتی",
         "fullDescription": "نبات سفید با کیفیت، برای طعم‌دهی ملایم.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D9%86%D8%A8%D8%A7%D8%AA%20%D8%B3%D9%81%DB%8C%D8%AF.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%86%D8%A8%D8%A7%D8%AA%20%D8%B3%D9%81%DB%8C%D8%AF.jpeg",
+        "filename": "نبات سفید.jpeg"
     },
     {
         "name": "نوشابه انرژی‌زا هایپ",
         "description": "انرژی‌زا و هیجان‌انگیز",
         "fullDescription": "نوشابه انرژی‌زا هایپ، برای افزایش تمرکز و انرژی.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D9%87%D8%A7%DB%8C%D9%BE.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%87%D8%A7%DB%8C%D9%BE.jpeg",
+        "filename": "هایپ.jpeg"
     },
     {
         "name": "پسته",
         "description": "پسته خندان و خوشمزه",
         "fullDescription": "پسته درجه یک، میان‌وعده‌ای سالم و لوکس.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D9%BE%D8%B3%D8%AA%D9%87.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%BE%D8%B3%D8%AA%D9%87.jpeg",
+        "filename": "پسته.jpeg"
     },
     {
         "name": "پوشک بچه توبا",
         "description": "پوشک سایز بزرگ راحت",
         "fullDescription": "پوشک بچه توبا با قدرت جذب بالا و ضد حساسیت.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%D9%BE%D9%88%D8%B4%DA%A9%20%D8%A8%DA%86%D9%87%20%D8%B3%D8%A7%DB%8C%D8%B2%20%D8%A8%D8%B2%D8%B1%DA%AF%20%D8%AA%D9%88%D8%A8%D8%A7.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%BE%D9%88%D8%B4%DA%A9%20%D8%A8%DA%86%D9%87%20%D8%B3%D8%A7%DB%8C%D8%B2%20%D8%A8%D8%B2%D8%B1%DA%AF%20%D8%AA%D9%88%D8%A8%D8%A7.jpeg",
+        "filename": "پوشک بچه سایز بزرگ توبا.jpeg"
     },
     {
         "name": "کاپوچینو گود دی",
         "description": "کاپوچینو با کف فراوان",
         "fullDescription": "کاپوچینو گود دی، طعمی دلچسب برای لحظات استراحت.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%DA%A9%D8%A7%D9%BE%D9%88%DA%86%DB%8C%D9%86%D9%88%20%DA%AF%D9%88%D8%AF%20%D8%AF%DB%8C.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%DA%A9%D8%A7%D9%BE%D9%88%DA%86%DB%8C%D9%86%D9%88%20%DA%AF%D9%88%D8%AF%20%D8%AF%DB%8C.jpeg",
+        "filename": "کاپوچینو گود دی.jpeg"
     },
     {
         "name": "رب گوجه فرنگی کامبیز",
         "description": "رب غلیظ و خوش‌رنگ",
         "fullDescription": "کنسرو رب گوجه فرنگی کامبیز، طعم‌دهنده عالی غذاها.",
-        "image": "https://raw.githubusercontent.com/planettechno0/Showcase/main/img/%DA%A9%D9%86%D8%B3%D8%B1%D9%88%20%DA%AF%D9%88%D8%AC%D9%87%20%D9%81%D8%B1%D9%86%DA%AF%DB%8C%20%DA%A9%D8%A7%D9%85%D8%A8%DB%8C%D8%B2.jpeg"
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%DA%A9%D9%86%D8%B3%D8%B1%D9%88%20%DA%AF%D9%88%D8%AC%D9%87%20%D9%81%D8%B1%D9%86%DA%AF%DB%8C%20%DA%A9%D8%A7%D9%85%D8%A8%DB%8C%D8%B2.jpeg",
+        "filename": "کنسرو گوجه فرنگی کامبیز.jpeg"
     }
 ];
 
@@ -452,9 +474,13 @@
                 card.className = 'card';
                 card.onclick = () => openModal(product);
 
+                // Fallback to local image if CDN fails
+                const fallbackImage = `img/${product.filename}`;
+                const onerror = `this.onerror=null;this.src='${fallbackImage}';`;
+
                 card.innerHTML = `
                     <div class="card-image-wrapper">
-                        <img src="${product.image}" alt="${product.name}" class="card-image" loading="lazy">
+                        <img src="${product.image}" alt="${product.name}" class="card-image" loading="lazy" onerror="${onerror}">
                     </div>
                     <div class="card-content">
                         <div>
@@ -470,6 +496,13 @@
 
         // Modal Functions
         function openModal(product) {
+            // Setup fallback for modal image as well
+            const fallbackImage = `img/${product.filename}`;
+            modalImg.onerror = function() {
+                this.onerror = null;
+                this.src = fallbackImage;
+            };
+
             modalImg.src = product.image;
             modalImg.alt = product.name;
             modalTitle.textContent = product.name;
