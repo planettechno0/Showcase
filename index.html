@@ -464,6 +464,9 @@
         const modalImg = document.getElementById('modal-img');
         const modalTitle = document.getElementById('modal-title');
         const modalDesc = document.getElementById('modal-desc');
+        const closeBtn = document.querySelector('.close-btn');
+        let closeModalTimeout;
+        let lastFocusedElement;
 
         // Render Products
         function render() {
@@ -496,13 +499,29 @@
 
         // Modal Functions
         function openModal(product) {
+            lastFocusedElement = document.activeElement;
+
+            // Cancel any pending close cleanup
+            if (closeModalTimeout) {
+                clearTimeout(closeModalTimeout);
+                closeModalTimeout = null;
+            }
+
             // Setup fallback for modal image as well
             const fallbackImage = `img/${product.filename}`;
+
+            modalImg.onload = function() {
+                this.classList.remove('skeleton');
+            };
+
             modalImg.onerror = function() {
                 this.onerror = null;
                 this.src = fallbackImage;
+                // We keep skeleton until fallback loads (triggering onload)
+                // If fallback fails, skeleton might persist, but that's acceptable for now
             };
             
+            modalImg.classList.add('skeleton');
             modalImg.src = product.image;
             modalImg.alt = product.name;
             modalTitle.textContent = product.name;
@@ -510,6 +529,11 @@
             
             modalElement.classList.add('active');
             document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+            // Focus management
+            setTimeout(() => {
+                closeBtn.focus();
+            }, 100);
         }
 
         function closeModal() {
@@ -517,9 +541,15 @@
             document.body.style.overflow = '';
             
             // Clear src after animation to prevent flicker next time
-            setTimeout(() => {
-                modalImg.src = '';
+            closeModalTimeout = setTimeout(() => {
+                modalImg.removeAttribute('src');
+                closeModalTimeout = null;
             }, 300);
+
+            // Restore focus
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
         }
 
         // Close modal when clicking outside content (on overlay)
