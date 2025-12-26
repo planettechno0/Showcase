@@ -469,6 +469,10 @@
         function render() {
             gridElement.innerHTML = '';
             
+            // ⚡ Bolt Optimization: Use DocumentFragment to batch DOM insertions
+            // This reduces reflows and repaints by appending all elements at once
+            const fragment = document.createDocumentFragment();
+
             products.forEach(product => {
                 const card = document.createElement('article');
                 card.className = 'card';
@@ -490,8 +494,10 @@
                         <span class="card-btn">مشاهده جزئیات &larr;</span>
                     </div>
                 `;
-                gridElement.appendChild(card);
+                fragment.appendChild(card);
             });
+
+            gridElement.appendChild(fragment);
         }
 
         // Modal Functions
