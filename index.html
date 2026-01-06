@@ -468,6 +468,9 @@
         // Render Products
         function render() {
             gridElement.innerHTML = '';
+            // PERFORMANCE: Use DocumentFragment to batch DOM insertions
+            // This reduces browser reflows/repaints from N times to 1 time
+            const fragment = document.createDocumentFragment();
             
             products.forEach(product => {
                 const card = document.createElement('article');
@@ -490,8 +493,10 @@
                         <span class="card-btn">مشاهده جزئیات &larr;</span>
                     </div>
                 `;
-                gridElement.appendChild(card);
+                fragment.appendChild(card);
             });
+
+            gridElement.appendChild(fragment);
         }
 
         // Modal Functions
