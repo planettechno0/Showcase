@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کاتالوگ محصولات | فروشگاه مدرن</title>
+    <!-- Importing a nice Persian font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.3/dist/font-face.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            background: var(--card-bg);
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Product Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding-bottom: 3rem;
+        }
+
+        /* Product Card */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-image-wrapper {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background-color: #e9ecef;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #6b7280;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-btn {
+            margin-top: 1rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+            align-self: flex-end;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .modal-content {
+                flex-direction: row;
+            }
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-image-wrapper {
+            flex: 1;
+            background: #f3f4f6;
+            min-height: 300px;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-details {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px; /* RTL layout */
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: white;
+            color: #d00;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #111;
+        }
+
+        .modal-description {
+            font-size: 1rem;
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .modal-action {
+            margin-top: auto;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+
+        .modal-action:hover {
+            background: #2563eb;
+        }
+
+        /* Loading animation */
+        .skeleton {
+            background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>گالری محصولات</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="product-grid" class="grid">
+            <!-- Products will be injected here via JS -->
+        </div>
+    </main>
+
+    <!-- Modal Structure -->
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <div class="modal-image-wrapper">
+                <img id="modal-img" src="" alt="Product Image" class="modal-image">
+            </div>
+            <div class="modal-details">
+                <h2 id="modal-title" class="modal-title"></h2>
+                <p id="modal-desc" class="modal-description"></p>
+                <button class="modal-action">افزودن به سبد خرید</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Product Data
+         * Images are loaded from jsdelivr (CDN) for better performance and reliability.
+         */
+        const products = [
+    {
+        "name": "آجیل مخلوط",
+        "description": "مخلوطی از بهترین مغزها",
+        "fullDescription": "آجیل مخلوط با کیفیت عالی، شامل پسته، بادام، فندق و تخمه. مناسب برای پذیرایی و میان‌وعده.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%A2%D8%AC%DB%8C%D9%84%20%D9%85%D8%AE%D9%84%D9%88%D8%B7.jpeg",
+        "filename": "آجیل مخلوط.jpeg"
+    },
+    {
+        "name": "ارده وزیری",
+        "description": "ارده کنجد خالص و مقوی",
+        "fullDescription": "ارده وزیری تهیه شده از کنجد مرغوب، انرژی‌زا و مناسب برای صبحانه.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%A7%D8%B1%D8%AF%D9%87%20%D9%88%D8%B2%DB%8C%D8%B1%DB%8C.jpeg",
+        "filename": "ارده وزیری.jpeg"
+    },
+    {
+        "name": "بادام زمینی",
+        "description": "بادام زمینی تازه و خوشمزه",
+        "fullDescription": "بادام زمینی با کیفیت، منبع غنی پروتئین و انرژی.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%A8%D8%A7%D8%AF%D9%85%20%D8%B2%D9%85%DB%8C%D9%86%DB%8C.jpeg",
+        "filename": "بادم زمینی.jpeg"
+    },
+    {
+        "name": "تخم کدو نمکی",
+        "description": "تخم کدو بوداده و نمکی",
+        "fullDescription": "تخم کدو گوشتی و خوشمزه، سرشار از مواد معدنی.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AA%D8%AE%D9%85%20%DA%A9%D8%AF%D9%88%20%D9%86%D9%85%DA%A9%DB%8C.jpeg",
+        "filename": "تخم کدو نمکی.jpeg"
+    },
+    {
+        "name": "تخمه آفتابگردان",
+        "description": "تخمه آفتابگردان درجه یک",
+        "fullDescription": "تخمه آفتابگردان با طعم عالی، سرگرم‌کننده و خوشمزه.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AA%D8%AE%D9%85%D9%87%20%D8%A2%D9%81%D8%AA%D8%A7%D8%A8%DA%AF%D8%B1%D8%AF%D8%A7%D9%86.jpeg",
+        "filename": "تخمه آفتابگردان.jpeg"
+    },
+    {
+        "name": "جوهر نمک اطلس",
+        "description": "پاک‌کننده قوی سطوح",
+        "fullDescription": "جوهر نمک اطلس برای جرم‌گیری و نظافت سرویس‌های بهداشتی.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AC%D9%88%D9%87%D8%B1%20%D9%86%D9%85%DA%A9%20%D8%A7%D8%B7%D9%84%D8%B3.jpeg",
+        "filename": "جوهر نمک اطلس.jpeg"
+    },
+    {
+        "name": "خرما آمارد",
+        "description": "خرمای شیرین و مقوی",
+        "fullDescription": "خرمای آمارد با طعم طبیعی و بافت نرم.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AE%D8%B1%D9%85%D8%A7%20%D8%A2%D9%85%D8%A7%D8%B1%D8%AF.jpeg",
+        "filename": "خرما آمارد.jpeg"
+    },
+    {
+        "name": "رطب آمارد",
+        "description": "رطب تازه و مجلسی",
+        "fullDescription": "رطب آمارد، شیرین و آبدار، مناسب برای سفره‌های شما.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%AE%D8%B1%D9%85%D8%A7%20%D8%B1%D8%B7%D8%A8%20%D8%A2%D9%85%D8%A7%D8%B1%D8%AF.jpeg",
+        "filename": "خرما رطب آمارد.jpeg"
+    },
+    {
+        "name": "سرکه تقطیری",
+        "description": "سرکه خالص و شفاف",
+        "fullDescription": "سرکه تقطیری مناسب برای ترشی و چاشنی غذا.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%B3%D8%B1%DA%A9%D9%87%20%D8%AA%D9%82%D8%B7%DB%8C%D8%B1%DB%8C.jpeg",
+        "filename": "سرکه تقطیری.jpeg"
+    },
+    {
+        "name": "سرکه سفید اطمینان",
+        "description": "سرکه سفید با کیفیت",
+        "fullDescription": "سرکه سفید اطمینان، انتخابی مطمئن برای آشپزی.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%B3%D8%B1%DA%A9%D9%87%20%D8%B3%D9%81%DB%8C%D8%AF%20%D8%A7%D8%B7%D9%85%DB%8C%D9%86%D8%A7%D9%86.jpeg",
+        "filename": "سرکه سفید اطمینان.jpeg"
+    },
+    {
+        "name": "عدس",
+        "description": "عدس زودپز و خوش‌طعم",
+        "fullDescription": "عدس درجه یک، منبع عالی پروتئین گیاهی.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%B9%D8%AF%D8%B3.jpeg",
+        "filename": "عدس.jpeg"
+    },
+    {
+        "name": "علی کافه",
+        "description": "قهوه فوری خوش‌عطر",
+        "fullDescription": "علی کافه با طعم غلیظ و انرژی‌بخش.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D8%B9%D9%84%DB%8C%20%DA%A9%D8%A7%D9%81%D9%87.jpeg",
+        "filename": "علی کافه.jpeg"
+    },
+    {
+        "name": "قرص ظرفشویی فیری",
+        "description": "تمیزکننده قوی ظروف",
+        "fullDescription": "قرص ماشین ظرفشویی فیری، چربی‌زدای قوی و براق‌کننده.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%82%D8%B1%D8%B5%20%D8%B8%D8%B1%D9%81%D8%B4%D9%88%DB%8C%DB%8C%20%D9%81%DB%8C%D8%B1%DB%8C.jpeg",
+        "filename": "قرص ظرفشویی فیری.jpeg"
+    },
+    {
+        "name": "قرص ظرفشویی فینیش",
+        "description": "شستشوی کامل ظروف",
+        "fullDescription": "قرص ماشین ظرفشویی فینیش، محافظ ظروف و ماشین ظرفشویی.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%82%D8%B1%D8%B5%20%D8%B8%D8%B1%D9%81%D8%B4%D9%88%DB%8C%DB%8C%20%D9%81%DB%8C%D9%86%DB%8C%D8%B4.jpeg",
+        "filename": "قرص ظرفشویی فینیش.jpeg"
+    },
+    {
+        "name": "لوبیا سفید",
+        "description": "لوبیا سفید مجلسی",
+        "fullDescription": "لوبیا سفید درشت و یکدست، مناسب برای خوراک و آش.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%84%D9%88%D8%A8%DB%8C%D8%A7%20%D8%B3%D9%81%DB%8C%D8%AF.jpeg",
+        "filename": "لوبیا سفید.jpeg"
+    },
+    {
+        "name": "نبات زعفرانی",
+        "description": "نبات با عطر زعفران",
+        "fullDescription": "نبات زعفرانی اعلاء، شیرین‌کننده چای و دمنوش.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%86%D8%A8%D8%A7%D8%AA%20%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C.jpeg",
+        "filename": "نبات زعفرانی.jpeg"
+    },
+    {
+        "name": "نبات سفید",
+        "description": "نبات سفید سنتی",
+        "fullDescription": "نبات سفید با کیفیت، برای طعم‌دهی ملایم.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%86%D8%A8%D8%A7%D8%AA%20%D8%B3%D9%81%DB%8C%D8%AF.jpeg",
+        "filename": "نبات سفید.jpeg"
+    },
+    {
+        "name": "نوشابه انرژی‌زا هایپ",
+        "description": "انرژی‌زا و هیجان‌انگیز",
+        "fullDescription": "نوشابه انرژی‌زا هایپ، برای افزایش تمرکز و انرژی.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%87%D8%A7%DB%8C%D9%BE.jpeg",
+        "filename": "هایپ.jpeg"
+    },
+    {
+        "name": "پسته",
+        "description": "پسته خندان و خوشمزه",
+        "fullDescription": "پسته درجه یک، میان‌وعده‌ای سالم و لوکس.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%BE%D8%B3%D8%AA%D9%87.jpeg",
+        "filename": "پسته.jpeg"
+    },
+    {
+        "name": "پوشک بچه توبا",
+        "description": "پوشک سایز بزرگ راحت",
+        "fullDescription": "پوشک بچه توبا با قدرت جذب بالا و ضد حساسیت.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%D9%BE%D9%88%D8%B4%DA%A9%20%D8%A8%DA%86%D9%87%20%D8%B3%D8%A7%DB%8C%D8%B2%20%D8%A8%D8%B2%D8%B1%DA%AF%20%D8%AA%D9%88%D8%A8%D8%A7.jpeg",
+        "filename": "پوشک بچه سایز بزرگ توبا.jpeg"
+    },
+    {
+        "name": "کاپوچینو گود دی",
+        "description": "کاپوچینو با کف فراوان",
+        "fullDescription": "کاپوچینو گود دی، طعمی دلچسب برای لحظات استراحت.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%DA%A9%D8%A7%D9%BE%D9%88%DA%86%DB%8C%D9%86%D9%88%20%DA%AF%D9%88%D8%AF%20%D8%AF%DB%8C.jpeg",
+        "filename": "کاپوچینو گود دی.jpeg"
+    },
+    {
+        "name": "رب گوجه فرنگی کامبیز",
+        "description": "رب غلیظ و خوش‌رنگ",
+        "fullDescription": "کنسرو رب گوجه فرنگی کامبیز، طعم‌دهنده عالی غذاها.",
+        "image": "https://cdn.jsdelivr.net/gh/planettechno0/Showcase@main/img/%DA%A9%D9%86%D8%B3%D8%B1%D9%88%20%DA%AF%D9%88%D8%AC%D9%87%20%D9%81%D8%B1%D9%86%DA%AF%DB%8C%20%DA%A9%D8%A7%D9%85%D8%A8%DB%8C%D8%B2.jpeg",
+        "filename": "کنسرو گوجه فرنگی کامبیز.jpeg"
+    }
+];
+
+        // App State
+        const gridElement = document.getElementById('product-grid');
+        const modalElement = document.getElementById('product-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+
+        // Render Products
+        function render() {
+            gridElement.innerHTML = '';
+
+            products.forEach(product => {
+                const card = document.createElement('article');
+                card.className = 'card';
+                card.onclick = () => openModal(product);
+
+                // Fallback to local image if CDN fails
+                const fallbackImage = `img/${product.filename}`;
+                const onerror = `this.onerror=null;this.src='${fallbackImage}';`;
+
+                card.innerHTML = `
+                    <div class="card-image-wrapper">
+                        <img src="${product.image}" alt="${product.name}" class="card-image" loading="lazy" onerror="${onerror}">
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <h3 class="card-title">${product.name}</h3>
+                            <p class="card-desc">${product.description}</p>
+                        </div>
+                        <span class="card-btn">مشاهده جزئیات &larr;</span>
+                    </div>
+                `;
+                gridElement.appendChild(card);
+            });
+        }
+
+        // Modal Functions
+        function openModal(product) {
+            // Setup fallback for modal image as well
+            const fallbackImage = `img/${product.filename}`;
+            modalImg.onerror = function() {
+                this.onerror = null;
+                this.src = fallbackImage;
+            };
+
+            modalImg.src = product.image;
+            modalImg.alt = product.name;
+            modalTitle.textContent = product.name;
+            modalDesc.textContent = product.fullDescription;
+
+            modalElement.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            modalElement.classList.remove('active');
+            document.body.style.overflow = '';
+
+            // Clear src after animation to prevent flicker next time
+            setTimeout(() => {
+                modalImg.src = '';
+            }, 300);
+        }
+
+        // Close modal when clicking outside content (on overlay)
+        modalElement.addEventListener('click', (e) => {
+            if (e.target === modalElement) {
+                closeModal();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalElement.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', render);
+
+    </script>
+</body>
+</html>
