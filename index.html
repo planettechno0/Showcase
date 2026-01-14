@@ -469,6 +469,10 @@
         function render() {
             gridElement.innerHTML = '';
             
+            // Performance: Use DocumentFragment to batch DOM insertions
+            // This reduces browser reflows/repaints from O(n) to O(1)
+            const fragment = document.createDocumentFragment();
+
             products.forEach(product => {
                 const card = document.createElement('article');
                 card.className = 'card';
@@ -490,8 +494,10 @@
                         <span class="card-btn">مشاهده جزئیات &larr;</span>
                     </div>
                 `;
-                gridElement.appendChild(card);
+                fragment.appendChild(card);
             });
+
+            gridElement.appendChild(fragment);
         }
 
         // Modal Functions
